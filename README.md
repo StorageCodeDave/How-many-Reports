@@ -35,24 +35,19 @@ In order to get this data I can use a value stored in the database, but this rel
 
 Here is the script from the picture and have many others
 
-DROP FUNCTION IF EXISTS [dbo].[ConvertAnyTime]
 
+DROP FUNCTION IF EXISTS [dbo].[ConvertAnyTime]
 SET ANSI_NULLS ON
 GO
-
 SET QUOTED_IDENTIFIER ON
 GO
-
 Create function [dbo].[ConvertAnyTime]
 (
-    @time decimal(28,3)
-    
+    @time decimal(28,3)  
 )
 returns varchar(20)
 as
 begin
-	
-
     declare @seconds decimal(18,3), @minutes int, @hours int,@unit varchar(20) = 'ss';
 			if(@unit = 'hour' or @unit = 'hh' )
 				set @seconds = @time * 60 * 60;
@@ -84,10 +79,10 @@ if coalesce(@time,1)<0
     return 
         convert(varchar(9), convert(int, @hours)) + ':' +
         right('00' + convert(varchar(2), convert(int, @minutes)), 2) 
-		--+ ':' +right('00' + convert(varchar(6), @seconds), 6)
-	
+		--+ ':' +right('00' + convert(varchar(6), @seconds), 6)	
 end
 GO
+
 With CTE as(
 SELECT 0 Empref,0 CardNo,'' 'Forenames','' 'Surname',0 'Coderef','' 'GroupName','' 'CodeName','' 'WDay','' 'Date','' 'HolType',
     MAX(CASE WHEN rateno = 0 THEN ratesname END) AS Rate0,
